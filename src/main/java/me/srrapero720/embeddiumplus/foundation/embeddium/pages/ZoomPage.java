@@ -1,8 +1,6 @@
 package me.srrapero720.embeddiumplus.foundation.embeddium.pages;
 
 import com.google.common.collect.ImmutableList;
-import dev.nolij.zume.common.Zume;
-import dev.nolij.zume.common.config.ZumeConfig;
 import me.jellysquid.mods.sodium.client.gui.options.OptionGroup;
 import me.jellysquid.mods.sodium.client.gui.options.OptionImpact;
 import me.jellysquid.mods.sodium.client.gui.options.OptionImpl;
@@ -10,10 +8,10 @@ import me.jellysquid.mods.sodium.client.gui.options.OptionPage;
 import me.jellysquid.mods.sodium.client.gui.options.control.ControlValueFormatter;
 import me.jellysquid.mods.sodium.client.gui.options.control.SliderControl;
 import me.jellysquid.mods.sodium.client.gui.options.control.TickBoxControl;
-import me.jellysquid.mods.sodium.client.gui.options.storage.SodiumOptionsStorage;
-import me.srrapero720.embeddiumplus.EmbyConfig;
 import me.srrapero720.embeddiumplus.foundation.embeddium.storage.ZumeOptionsStorage;
 import net.minecraft.network.chat.Component;
+import net.minecraft.network.chat.TextComponent;
+import net.minecraft.network.chat.TranslatableComponent;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -22,15 +20,15 @@ public class ZoomPage extends OptionPage {
     private static final ZumeOptionsStorage zoomOptionsStorage = new ZumeOptionsStorage();
 
     public ZoomPage() {
-        super(Component.translatable("embeddium.plus.options.zoom.page"), create());
+        super(new TranslatableComponent("embeddium.plus.options.zoom.page"), create());
     }
 
     private static ImmutableList<OptionGroup> create() {
         final List<OptionGroup> groups = new ArrayList<>();
 
         final var cinematicZoom = OptionImpl.createBuilder(boolean.class, zoomOptionsStorage)
-                .setName(Component.translatable("embeddium.plus.options.zoom.cinematic.title"))
-                .setTooltip(Component.translatable("embeddium.plus.options.zoom.cinematic.desc"))
+                .setName(new TranslatableComponent("embeddium.plus.options.zoom.cinematic.title"))
+                .setTooltip(new TranslatableComponent("embeddium.plus.options.zoom.cinematic.desc"))
                 .setControl(TickBoxControl::new)
                 .setBinding(
                         (options, value) -> options.enableCinematicZoom = value,
@@ -40,8 +38,8 @@ public class ZoomPage extends OptionPage {
                 .build();
 
         final var mouseSensitive = OptionImpl.createBuilder(int.class, zoomOptionsStorage)
-                .setName(Component.translatable("embeddium.plus.options.zoom.sensitive.title"))
-                .setTooltip(Component.translatable("embeddium.plus.options.zoom.sensitive.desc"))
+                .setName(new TranslatableComponent("embeddium.plus.options.zoom.sensitive.title"))
+                .setTooltip(new TranslatableComponent("embeddium.plus.options.zoom.sensitive.desc"))
                 .setControl((option) -> new SliderControl(option, 0, 100, 1, ControlValueFormatter.biomeBlend()))
                 .setBinding(
                         (options, value) -> options.mouseSensitivityFloor = Math.min(Math.floor(value / 100d), 1.0d),
@@ -50,8 +48,8 @@ public class ZoomPage extends OptionPage {
                 .build();
 
         final var zoomSpeed = OptionImpl.createBuilder(int.class, zoomOptionsStorage)
-                .setName(Component.translatable("embeddium.plus.options.zoom.speed.title"))
-                .setTooltip(Component.translatable("embeddium.plus.options.zoom.speed.desc"))
+                .setName(new TranslatableComponent("embeddium.plus.options.zoom.speed.title"))
+                .setTooltip(new TranslatableComponent("embeddium.plus.options.zoom.speed.desc"))
                 .setControl((option) -> new SliderControl(option, 5, 100, 1, ControlValueFormatter.biomeBlend()))
                 .setBinding(
                         (options, value) -> options.zoomSpeed = value.shortValue(),
@@ -60,8 +58,8 @@ public class ZoomPage extends OptionPage {
                 .build();
 
         final var zoomScrolling = OptionImpl.createBuilder(boolean.class, zoomOptionsStorage)
-                .setName(Component.translatable("embeddium.plus.options.zoom.scrolling.title"))
-                .setTooltip(Component.translatable("embeddium.plus.options.zoom.scrolling.desc"))
+                .setName(new TranslatableComponent("embeddium.plus.options.zoom.scrolling.title"))
+                .setTooltip(new TranslatableComponent("embeddium.plus.options.zoom.scrolling.desc"))
                 .setControl(TickBoxControl::new)
                 .setBinding(
                         (options, value) -> options.enableZoomScrolling = value,
@@ -70,9 +68,9 @@ public class ZoomPage extends OptionPage {
                 .build();
 
         final var zoomSmoothnessMS = OptionImpl.createBuilder(int.class, zoomOptionsStorage)
-                .setName(Component.translatable("embeddium.plus.options.zoom.smoothness.title"))
-                .setTooltip(Component.translatable("embeddium.plus.options.zoom.smoothness.desc"))
-                .setControl((option) -> new SliderControl(option, 50, 150, 10, i -> Component.literal(i + "").append(Component.translatable("embeddium.plus.options.common.millis")).getString()))
+                .setName(new TranslatableComponent("embeddium.plus.options.zoom.smoothness.title"))
+                .setTooltip(new TranslatableComponent("embeddium.plus.options.zoom.smoothness.desc"))
+                .setControl((option) -> new SliderControl(option, 50, 150, 10, i -> new TextComponent(i + "").append(new TranslatableComponent("embeddium.plus.options.common.millis")).getString()))
                 .setBinding(
                         (options, value) -> options.zoomSmoothnessMs = value.shortValue(),
                         (options) -> (int) options.zoomSmoothnessMs
@@ -80,8 +78,8 @@ public class ZoomPage extends OptionPage {
                 .build();
 
         final var easingExponent = OptionImpl.createBuilder(int.class, zoomOptionsStorage)
-                .setName(Component.translatable("embeddium.plus.options.zoom.easing.title"))
-                .setTooltip(Component.translatable("embeddium.plus.options.zoom.easing.desc"))
+                .setName(new TranslatableComponent("embeddium.plus.options.zoom.easing.title"))
+                .setTooltip(new TranslatableComponent("embeddium.plus.options.zoom.easing.desc"))
                 .setControl((option) -> new SliderControl(option, 1, 8, 1, ControlValueFormatter.multiplier()))
                 .setBinding(
                         (options, value) -> options.easingExponent = value.shortValue(),
@@ -90,8 +88,8 @@ public class ZoomPage extends OptionPage {
                 .build();
 
         final var useQuadratics = OptionImpl.createBuilder(boolean.class, zoomOptionsStorage)
-                .setName(Component.translatable("embeddium.plus.options.zoom.quadratics.title"))
-                .setTooltip(Component.translatable("embeddium.plus.options.zoom.quadratics.desc"))
+                .setName(new TranslatableComponent("embeddium.plus.options.zoom.quadratics.title"))
+                .setTooltip(new TranslatableComponent("embeddium.plus.options.zoom.quadratics.desc"))
                 .setControl(TickBoxControl::new)
                 .setBinding(
                         (options, value) -> options.useQuadratic = value,
@@ -100,8 +98,8 @@ public class ZoomPage extends OptionPage {
                 .build();
 
         final var defaultZoom = OptionImpl.createBuilder(int.class, zoomOptionsStorage)
-                .setName(Component.translatable("embeddium.plus.options.zoom.default.title"))
-                .setTooltip(Component.translatable("embeddium.plus.options.zoom.default.desc"))
+                .setName(new TranslatableComponent("embeddium.plus.options.zoom.default.title"))
+                .setTooltip(new TranslatableComponent("embeddium.plus.options.zoom.default.desc"))
                 .setControl((option) -> new SliderControl(option, 0, 100, 1, ControlValueFormatter.percentage()))
                 .setBinding(
                         (options, value) -> options.defaultZoom = Math.min(Math.floor(value / 100d), 1.0d),
@@ -110,8 +108,8 @@ public class ZoomPage extends OptionPage {
                 .build();
 
         final var toggleMode = OptionImpl.createBuilder(boolean.class, zoomOptionsStorage)
-                .setName(Component.translatable("embeddium.plus.options.zoom.toggle.title"))
-                .setTooltip(Component.translatable("embeddium.plus.options.zoom.toggle.desc"))
+                .setName(new TranslatableComponent("embeddium.plus.options.zoom.toggle.title"))
+                .setTooltip(new TranslatableComponent("embeddium.plus.options.zoom.toggle.desc"))
                 .setControl(TickBoxControl::new)
                 .setBinding(
                         (options, value) -> options.toggleMode = value,
@@ -120,8 +118,8 @@ public class ZoomPage extends OptionPage {
                 .build();
 
         final var maxFov = OptionImpl.createBuilder(int.class, zoomOptionsStorage)
-                .setName(Component.translatable("embeddium.plus.options.zoom.max.title"))
-                .setTooltip(Component.translatable("embeddium.plus.options.zoom.max.desc"))
+                .setName(new TranslatableComponent("embeddium.plus.options.zoom.max.title"))
+                .setTooltip(new TranslatableComponent("embeddium.plus.options.zoom.max.desc"))
                 .setControl((option) -> new SliderControl(option, 40, 200, 2, ControlValueFormatter.number()))
                 .setBinding(
                         (options, value) -> options.maxFOV = (double) value,
@@ -130,8 +128,8 @@ public class ZoomPage extends OptionPage {
                 .build();
 
         final var minFov = OptionImpl.createBuilder(int.class, zoomOptionsStorage)
-                .setName(Component.translatable("embeddium.plus.options.zoom.min.title"))
-                .setTooltip(Component.translatable("embeddium.plus.options.zoom.min.desc"))
+                .setName(new TranslatableComponent("embeddium.plus.options.zoom.min.title"))
+                .setTooltip(new TranslatableComponent("embeddium.plus.options.zoom.min.desc"))
                 .setControl((option) -> new SliderControl(option, 40, 200, 2, ControlValueFormatter.number()))
                 .setBinding(
                         (options, value) -> options.minFOV = (double) value,

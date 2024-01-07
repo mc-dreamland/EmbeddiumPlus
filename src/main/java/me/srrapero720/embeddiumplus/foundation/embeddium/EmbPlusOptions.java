@@ -14,18 +14,22 @@ import me.srrapero720.embeddiumplus.EmbyConfig.FullScreenMode;
 import me.srrapero720.embeddiumplus.EmbyTools;
 import me.srrapero720.embeddiumplus.foundation.fastmodels.FastModels;
 import net.minecraft.network.chat.Component;
+import net.minecraft.network.chat.TextComponent;
+import net.minecraft.network.chat.TranslatableComponent;
+
+import me.srrapero720.embeddiumplus.EmbyConfig.*;
 
 import java.util.List;
 
 public class EmbPlusOptions {
     public static Option<FullScreenMode> getFullscreenOption(MinecraftOptionsStorage options) {
         return OptionImpl.createBuilder(FullScreenMode.class, options)
-                .setName(Component.translatable("embeddium.plus.options.screen.title"))
-                .setTooltip(Component.translatable("embeddium.plus.options.screen.desc"))
+                .setName(new TranslatableComponent("embeddium.plus.options.screen.title"))
+                .setTooltip(new TranslatableComponent("embeddium.plus.options.screen.desc"))
                 .setControl((opt) -> new CyclingControl<>(opt, FullScreenMode.class, new Component[] {
-                        Component.translatable("embeddium.plus.options.screen.windowed"),
-                        Component.translatable("embeddium.plus.options.screen.borderless"),
-                        Component.translatable("options.fullscreen")
+                        new TranslatableComponent("embeddium.plus.options.screen.windowed"),
+                        new TranslatableComponent("embeddium.plus.options.screen.borderless"),
+                        new TranslatableComponent("options.fullscreen")
                 }))
                 .setBinding(EmbyConfig::setFullScreenMode, (opts) -> EmbyConfig.fullScreen.get()).build();
     }
@@ -35,12 +39,12 @@ public class EmbPlusOptions {
         var builder = OptionGroup.createBuilder();
 
         builder.add(OptionImpl.createBuilder(FPSDisplayMode.class, sodiumOpts)
-                .setName(Component.translatable("embeddium.plus.options.displayfps.title"))
-                .setTooltip(Component.translatable("embeddium.plus.options.displayfps.desc"))
+                .setName(new TranslatableComponent("embeddium.plus.options.displayfps.title"))
+                .setTooltip(new TranslatableComponent("embeddium.plus.options.displayfps.desc"))
                 .setControl((option) -> new CyclingControl<>(option, FPSDisplayMode.class, new Component[]{
-                        Component.translatable("embeddium.plus.options.common.off"),
-                        Component.translatable("embeddium.plus.options.common.simple"),
-                        Component.translatable("embeddium.plus.options.common.advanced")
+                        new TranslatableComponent("embeddium.plus.options.common.off"),
+                        new TranslatableComponent("embeddium.plus.options.common.simple"),
+                        new TranslatableComponent("embeddium.plus.options.common.advanced")
                 }))
                 .setBinding(
                         (opts, value) -> EmbyConfig.fpsDisplayMode.set(value),
@@ -50,13 +54,13 @@ public class EmbPlusOptions {
         );
 
         builder.add(OptionImpl.createBuilder(FPSDisplaySystemMode.class, sodiumOpts)
-                .setName(Component.translatable("embeddium.plus.options.displayfps.system.title"))
-                .setTooltip(Component.translatable("embeddium.plus.options.displayfps.system.desc"))
+                .setName(new TranslatableComponent("embeddium.plus.options.displayfps.system.title"))
+                .setTooltip(new TranslatableComponent("embeddium.plus.options.displayfps.system.desc"))
                 .setControl((option) -> new CyclingControl<>(option, FPSDisplaySystemMode.class, new Component[]{
-                        Component.translatable("embeddium.plus.options.common.off"),
-                        Component.translatable("embeddium.plus.options.common.on"),
-                        Component.translatable("embeddium.plus.options.displayfps.system.gpu"),
-                        Component.translatable("embeddium.plus.options.displayfps.system.ram")
+                        new TranslatableComponent("embeddium.plus.options.common.off"),
+                        new TranslatableComponent("embeddium.plus.options.common.on"),
+                        new TranslatableComponent("embeddium.plus.options.displayfps.system.gpu"),
+                        new TranslatableComponent("embeddium.plus.options.displayfps.system.ram")
                 }))
                 .setBinding((options, value) -> EmbyConfig.fpsDisplaySystemMode.set(value),
                         (options) -> EmbyConfig.fpsDisplaySystemMode.get())
@@ -65,12 +69,12 @@ public class EmbPlusOptions {
 
         var components = new Component[FPSDisplayGravity.values().length];
         for (int i = 0; i < components.length; i++) {
-            components[i] = Component.translatable("embeddium.plus.options.displayfps.gravity." + FPSDisplayGravity.values()[i].name().toLowerCase());
+            components[i] = new TranslatableComponent("embeddium.plus.options.displayfps.gravity." + FPSDisplayGravity.values()[i].name().toLowerCase());
         }
 
         builder.add(OptionImpl.createBuilder(FPSDisplayGravity.class, sodiumOpts)
-                .setName(Component.translatable("embeddium.plus.options.displayfps.gravity.title"))
-                .setTooltip(Component.translatable("embeddium.plus.options.displayfps.gravity.desc"))
+                .setName(new TranslatableComponent("embeddium.plus.options.displayfps.gravity.title"))
+                .setTooltip(new TranslatableComponent("embeddium.plus.options.displayfps.gravity.desc"))
                 .setControl((option) -> new CyclingControl<>(option, FPSDisplayGravity.class, components))
                 .setBinding(
                         (opts, value) -> EmbyConfig.fpsDisplayGravity.set(value),
@@ -80,9 +84,9 @@ public class EmbPlusOptions {
 
 
         builder.add(OptionImpl.createBuilder(Integer.TYPE, sodiumOpts)
-                .setName(Component.translatable("embeddium.plus.options.displayfps.margin.title"))
-                .setTooltip(Component.translatable("embeddium.plus.options.displayfps.margin.desc"))
-                .setControl((option) -> new SliderControl(option, 4, 64, 1, (v) -> Component.literal(v + "px").getString()))
+                .setName(new TranslatableComponent("embeddium.plus.options.displayfps.margin.title"))
+                .setTooltip(new TranslatableComponent("embeddium.plus.options.displayfps.margin.desc"))
+                .setControl((option) -> new SliderControl(option, 4, 64, 1, (v) -> new TextComponent(v + "px").getString()))
                 .setImpact(OptionImpact.LOW)
                 .setBinding(
                         (opts, value) -> {
@@ -94,8 +98,8 @@ public class EmbPlusOptions {
         );
 
         builder.add(OptionImpl.createBuilder(boolean.class, sodiumOpts)
-                .setName(Component.translatable("embeddium.plus.options.displayfps.shadow.title"))
-                .setTooltip(Component.translatable("embeddium.plus.options.displayfps.shadow.desc"))
+                .setName(new TranslatableComponent("embeddium.plus.options.displayfps.shadow.title"))
+                .setTooltip(new TranslatableComponent("embeddium.plus.options.displayfps.shadow.desc"))
                 .setControl(TickBoxControl::new)
                 .setBinding(
                         (options, value) -> {
@@ -113,8 +117,8 @@ public class EmbPlusOptions {
     public static void setPerformanceOptions(List<OptionGroup> groups, SodiumOptionsStorage sodiumOpts) {
         var builder = OptionGroup.createBuilder();
         var fontShadow = OptionImpl.createBuilder(boolean.class, sodiumOpts)
-                .setName(Component.translatable("embeddium.plus.options.fontshadow.title"))
-                .setTooltip(Component.translatable("embeddium.plus.options.fontshadow.desc"))
+                .setName(new TranslatableComponent("embeddium.plus.options.fontshadow.title"))
+                .setTooltip(new TranslatableComponent("embeddium.plus.options.fontshadow.desc"))
                 .setControl(TickBoxControl::new)
                 .setBinding(
                         (options, value) -> {
@@ -125,8 +129,8 @@ public class EmbPlusOptions {
                 .setImpact(OptionImpact.VARIES)
                 .build();
         var fastChest = OptionImpl.createBuilder(boolean.class, sodiumOpts)
-                .setName(Component.translatable("embeddium.plus.options.fastchest.title"))
-                .setTooltip(Component.translatable("embeddium.plus.options.fastchest.desc"))
+                .setName(new TranslatableComponent("embeddium.plus.options.fastchest.title"))
+                .setTooltip(new TranslatableComponent("embeddium.plus.options.fastchest.desc"))
                 .setControl(TickBoxControl::new)
                 .setBinding(
                         (options, value) -> {
@@ -140,8 +144,8 @@ public class EmbPlusOptions {
                 .build();
 
         var fastBeds = OptionImpl.createBuilder(boolean.class, sodiumOpts)
-                .setName(Component.translatable("embeddium.plus.options.fastbeds.title"))
-                .setTooltip(Component.translatable("embeddium.plus.options.fastbeds.desc"))
+                .setName(new TranslatableComponent("embeddium.plus.options.fastbeds.title"))
+                .setTooltip(new TranslatableComponent("embeddium.plus.options.fastbeds.desc"))
                 .setControl(TickBoxControl::new)
                 .setBinding(
                         (options, value) -> {
@@ -155,8 +159,8 @@ public class EmbPlusOptions {
                 .build();
 
         var hideJEI = OptionImpl.createBuilder(boolean.class, sodiumOpts)
-                .setName(Component.translatable("embeddium.plus.options.jei.title"))
-                .setTooltip(Component.translatable("embeddium.plus.options.jei.desc"))
+                .setName(new TranslatableComponent("embeddium.plus.options.jei.title"))
+                .setTooltip(new TranslatableComponent("embeddium.plus.options.jei.desc"))
                 .setControl(TickBoxControl::new)
                 .setBinding(
                         (options, value) -> {

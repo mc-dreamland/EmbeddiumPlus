@@ -395,17 +395,17 @@ public class EmbyConfig {
 
     public static void setFullScreenMode(Options opts, FullScreenMode value) {
         fullScreen.set(value);
-        opts.fullscreen.set(value != FullScreenMode.WINDOWED);
+        opts.fullscreen = (value != FullScreenMode.WINDOWED);
 
         Minecraft client = Minecraft.getInstance();
         Window window = client.getWindow();
 
-        if (window.isFullscreen() != opts.fullscreen.get()) {
+        if (window.isFullscreen() != opts.fullscreen) {
             window.toggleFullScreen();
-            opts.fullscreen.set(window.isFullscreen());
+            opts.fullscreen = (window.isFullscreen());
         }
 
-        if (opts.fullscreen.get()) {
+        if (opts.fullscreen) {
             ((MainWindowAccessor) (Object) window).setDirty(true);
             window.changeFullscreenVideoMode();
         }
@@ -487,7 +487,7 @@ public class EmbyConfig {
         }
 
         public static FullScreenMode getVanillaConfig() {
-            return Minecraft.getInstance().options.fullscreen().get() ? BORDERLESS : WINDOWED;
+            return Minecraft.getInstance().options.fullscreen ? BORDERLESS : WINDOWED;
         }
 
         public boolean isBorderless() {

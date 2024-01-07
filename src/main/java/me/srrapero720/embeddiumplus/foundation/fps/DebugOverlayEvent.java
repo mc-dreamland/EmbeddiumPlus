@@ -10,10 +10,10 @@ import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.Font;
 import net.minecraft.client.gui.GuiComponent;
 import net.minecraft.network.chat.Component;
+import net.minecraft.network.chat.TranslatableComponent;
 import net.minecraft.util.FrameTimer;
 import net.minecraftforge.api.distmarker.Dist;
-import net.minecraftforge.client.event.RenderGuiEvent;
-import net.minecraftforge.client.event.RenderGuiOverlayEvent;
+import net.minecraftforge.client.event.RenderGameOverlayEvent;
 import net.minecraftforge.eventbus.api.EventPriority;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
@@ -22,11 +22,11 @@ import net.minecraftforge.fml.common.Mod;
 public class DebugOverlayEvent {
     private static final FPSDisplay DISPLAY = new FPSDisplay();
 
-    private static final Component MSG_FPS = Component.translatable("embeddium.plus.options.displayfps.fps");
-    private static final Component MSG_MIN = Component.translatable("embeddium.plus.options.displayfps.min");
-    private static final Component MSG_AVG = Component.translatable("embeddium.plus.options.displayfps.avg");
-    private static final Component MSG_GPU = Component.translatable("embeddium.plus.options.displayfps.gpu");
-    private static final Component MSG_MEM = Component.translatable("embeddium.plus.options.displayfps.mem");
+    private static final Component MSG_FPS = new TranslatableComponent("embeddium.plus.options.displayfps.fps");
+    private static final Component MSG_MIN = new TranslatableComponent("embeddium.plus.options.displayfps.min");
+    private static final Component MSG_AVG = new TranslatableComponent("embeddium.plus.options.displayfps.avg");
+    private static final Component MSG_GPU = new TranslatableComponent("embeddium.plus.options.displayfps.gpu");
+    private static final Component MSG_MEM = new TranslatableComponent("embeddium.plus.options.displayfps.mem");
 
     private static final AverageQueue AVERAGE = new AverageQueue();
 
@@ -38,17 +38,19 @@ public class DebugOverlayEvent {
     private static int memUsage = -1;
 
     @SubscribeEvent(priority = EventPriority.HIGHEST)
-    public static void onRenderOverlayItem(RenderGuiOverlayEvent.Pre event) {
-        if (!event.getOverlay().id().getPath().equals("debug_text")) return;
+    public static void onRenderOverlayItem(RenderGameOverlayEvent.PreLayer event) {
+        if (event.getType() != RenderGameOverlayEvent.ElementType.DEBUG) return;
 
         // cancel rendering text if chart is displaying
         if (Minecraft.getInstance().options.renderFpsChart) event.setCanceled(true);
     }
 
     @SubscribeEvent
-    public static void onRenderOverlay(RenderGuiEvent.Pre event) {
-        var minecraft = Minecraft.getInstance();
-        renderFPSChar(minecraft, event.getPoseStack(), minecraft.font, event.getWindow().getGuiScale(), event.getWindow().getGuiScaledWidth());
+    public static void onRenderOverlay(RenderGameOverlayEvent.Pre event) {
+        if (event.getType() == RenderGameOverlayEvent.ElementType.ALL) {
+            var minecraft = Minecraft.getInstance();
+            renderFPSChar(minecraft, event.getMatrixStack(), minecraft.font, event.getWindow().getGuiScale(), event.getWindow().getGuiScaledWidth());
+        }
     }
 
     private static void renderFPSChar(Minecraft mc, PoseStack pose, Font font, double scale, int scaledWidth) {
