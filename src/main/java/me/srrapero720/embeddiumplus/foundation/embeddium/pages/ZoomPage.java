@@ -72,7 +72,7 @@ public class ZoomPage extends OptionPage {
         final var zoomSmoothnessMS = OptionImpl.createBuilder(int.class, zoomOptionsStorage)
                 .setName(Component.translatable("embeddium.plus.options.zoom.smoothness.title"))
                 .setTooltip(Component.translatable("embeddium.plus.options.zoom.smoothness.desc"))
-                .setControl((option) -> new SliderControl(option, 50, 150, 10, i -> Component.literal(i + "").append(Component.translatable("embeddium.plus.options.common.millis"))))
+                .setControl((option) -> new SliderControl(option, 50, 150, 10, i -> Component.literal(i + "").append(Component.translatable("embeddium.plus.options.common.millis")).getString()))
                 .setBinding(
                         (options, value) -> options.zoomSmoothnessMs = value.shortValue(),
                         (options) -> (int) options.zoomSmoothnessMs

@@ -18,7 +18,7 @@ import java.util.concurrent.CompletableFuture;
 public class LanguageMixin extends OptionsSubScreen {
     public LanguageMixin(Screen screen, Options options, Component component) { super(screen, options, component); }
 
-    @WrapOperation(method = "onDone", at = @At(value = "INVOKE", target = "Lnet/minecraft/client/Minecraft;reloadResourcePacks()Ljava/util/concurrent/CompletableFuture;"))
+    @WrapOperation(method = "lambda$init$0", at = @At(value = "INVOKE", target = "Lnet/minecraft/client/Minecraft;reloadResourcePacks()Ljava/util/concurrent/CompletableFuture;"))
     public CompletableFuture<Void> redirect$resourcesReload(Minecraft instance, Operation<CompletableFuture<Void>> original) {
         if (EmbyConfig.fastLanguageReloadCache) {
             this.minecraft.getLanguageManager().onResourceManagerReload(this.minecraft.getResourceManager());

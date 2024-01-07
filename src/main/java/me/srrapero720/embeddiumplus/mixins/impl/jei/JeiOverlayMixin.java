@@ -1,12 +1,12 @@
 package me.srrapero720.embeddiumplus.mixins.impl.jei;
 
+import com.mojang.blaze3d.vertex.PoseStack;
 import me.srrapero720.embeddiumplus.EmbyConfig;
 import mezz.jei.gui.elements.GuiIconToggleButton;
 import mezz.jei.gui.input.GuiTextFieldFilter;
 import mezz.jei.gui.overlay.IngredientListOverlay;
 import mezz.jei.gui.overlay.ScreenPropertiesCache;
 import net.minecraft.client.Minecraft;
-import net.minecraft.client.gui.GuiGraphics;
 import org.spongepowered.asm.mixin.*;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
@@ -20,8 +20,8 @@ public class JeiOverlayMixin {
     @Shadow @Final private ScreenPropertiesCache screenPropertiesCache;
 
     @Dynamic
-    @Inject(method = "drawScreen", at = @At(value = "INVOKE", target = "Lmezz/jei/gui/overlay/IngredientGridWithNavigation;draw(Lnet/minecraft/client/Minecraft;Lnet/minecraft/client/gui/GuiGraphics;IIF)V"), cancellable = true)
-    public void inject$renderOverlay(Minecraft minecraft, GuiGraphics guiGraphics, int mouseX, int mouseY, float partialTicks, CallbackInfo ci) {
+    @Inject(method = "drawScreen", at = @At(value = "INVOKE", target = "Lmezz/jei/gui/overlay/IngredientGridWithNavigation;draw(Lnet/minecraft/client/Minecraft;Lcom/mojang/blaze3d/vertex/PoseStack;IIF)V"), cancellable = true)
+    public void inject$renderOverlay(Minecraft minecraft, PoseStack guiGraphics, int mouseX, int mouseY, float partialTicks, CallbackInfo ci) {
         if (!EmbyConfig.hideJREICache) return;
 
         String value = searchField.getValue();
@@ -34,7 +34,7 @@ public class JeiOverlayMixin {
     }
 
     @Inject(method = "drawTooltips", at = @At(value = "HEAD"), cancellable = true)
-    public void inject$renderOverlay(Minecraft minecraft, GuiGraphics guiGraphics, int mouseX, int mouseY, CallbackInfo ci) {
+    public void inject$renderOverlay(Minecraft minecraft, PoseStack guiGraphics, int mouseX, int mouseY, CallbackInfo ci) {
         if (!EmbyConfig.hideJREICache) return;
 
         String value = searchField.getValue();

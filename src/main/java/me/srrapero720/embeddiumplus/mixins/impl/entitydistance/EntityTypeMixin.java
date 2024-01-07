@@ -3,10 +3,9 @@ package me.srrapero720.embeddiumplus.mixins.impl.entitydistance;
 import me.srrapero720.embeddiumplus.EmbyConfig;
 import me.srrapero720.embeddiumplus.EmbyTools;
 import me.srrapero720.embeddiumplus.foundation.entitydistance.IWhitelistCheck;
-import net.minecraft.core.registries.BuiltInRegistries;
+import net.minecraft.core.Registry;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.entity.EntityType;
-import net.minecraft.world.level.block.entity.BlockEntityType;
 import org.apache.logging.log4j.Marker;
 import org.apache.logging.log4j.MarkerManager;
 import org.spongepowered.asm.mixin.Mixin;
@@ -38,7 +37,7 @@ public abstract class EntityTypeMixin implements IWhitelistCheck {
 
     @Unique
     public ResourceLocation embPlus$resourceLocation() {
-        return BuiltInRegistries.ENTITY_TYPE.getKey(embPlus$cast());
+        return Registry.ENTITY_TYPE.getKey(embPlus$cast());
     }
 
     @Unique

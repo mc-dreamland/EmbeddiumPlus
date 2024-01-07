@@ -1,5 +1,6 @@
 package me.srrapero720.embeddiumplus.foundation.fps;
 
+import com.mojang.blaze3d.vertex.PoseStack;
 import me.srrapero720.embeddiumplus.EmbeddiumPlus;
 import me.srrapero720.embeddiumplus.EmbyConfig;
 import me.srrapero720.embeddiumplus.EmbyTools;
@@ -7,7 +8,7 @@ import me.srrapero720.embeddiumplus.foundation.fps.accessors.IUsageGPU;
 import net.minecraft.ChatFormatting;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.Font;
-import net.minecraft.client.gui.GuiGraphics;
+import net.minecraft.client.gui.GuiComponent;
 import net.minecraft.network.chat.Component;
 import net.minecraft.util.FrameTimer;
 import net.minecraftforge.api.distmarker.Dist;
@@ -47,10 +48,10 @@ public class DebugOverlayEvent {
     @SubscribeEvent
     public static void onRenderOverlay(RenderGuiEvent.Pre event) {
         var minecraft = Minecraft.getInstance();
-        renderFPSChar(minecraft, event.getGuiGraphics(), minecraft.font, event.getWindow().getGuiScale());
+        renderFPSChar(minecraft, event.getPoseStack(), minecraft.font, event.getWindow().getGuiScale(), event.getWindow().getGuiScaledWidth());
     }
 
-    private static void renderFPSChar(Minecraft mc, GuiGraphics graphics, Font font, double scale) {
+    private static void renderFPSChar(Minecraft mc, PoseStack pose, Font font, double scale, int scaledWidth) {
         if (mc.options.renderDebug || mc.options.renderFpsChart) return; // No render when F3 is open
 
         final var mode = EmbyConfig.fpsDisplayMode.get();
@@ -89,7 +90,7 @@ public class DebugOverlayEvent {
 
         // Prevent FPS-Display to render outside screenspace
         String displayString = DISPLAY.toString();
-        float maxPosX = graphics.guiWidth() - font.width(displayString);
+        float maxPosX = scaledWidth - font.width(displayString);
         float posX, posY;
 
         posX = switch (EmbyConfig.fpsDisplayGravity.get()) {
@@ -99,19 +100,18 @@ public class DebugOverlayEvent {
         };
         posY = margin;
 
-        graphics.pose().pushPose();
+        pose.pushPose();
         if (EmbyConfig.fpsDisplayShadowCache) {
-            graphics.fill((int) posX - 2, (int) posY - 2, (int) posX + font.width(displayString) + 2, (int) (posY + font.lineHeight) + 1, -1873784752);
-            graphics.flush();
+            GuiComponent.fill(pose,(int) posX - 2, (int) posY - 2, (int) posX + font.width(displayString) + 2, (int) (posY + font.lineHeight) + 1, -1873784752);
         }
 
-        graphics.drawString(font, displayString, posX, posY, 0xffffffff, true);
+        GuiComponent.drawString(pose, font, displayString, (int) posX, (int) posY, EmbyTools.getColorARGB(200, 255, 255, 255));
         DISPLAY.release();
-        graphics.pose().popPose();
+        pose.popPose();
     }
 
     private static ChatFormatting calculateFPS$getColor(Minecraft mc) {
-        fps = mc.getFps();
+        fps = Minecraft.fps;
         return EmbyTools.colorByLow(fps);
     }
 
@@ -123,7 +123,7 @@ public class DebugOverlayEvent {
 
         if (end == start) return EmbyTools.colorByLow(minFPS);
 
-        int fps = mc.getFps();
+        int fps = Minecraft.fps;
         if (fps <= 0) fps = 1;
 
         long[] frames = timer.getLog();
@@ -146,8 +146,8 @@ public class DebugOverlayEvent {
     }
 
     private static ChatFormatting calculateAvgFPS$getColor(Minecraft mc) {
-        if (mc.getFps() != lastAvgFps) { // DON'T BLOOD AVG
-            AVERAGE.push(lastAvgFps = mc.getFps());
+        if (Minecraft.fps != lastAvgFps) { // DON'T BLOOD AVG
+            AVERAGE.push(lastAvgFps = Minecraft.fps);
             avgFPS = AVERAGE.calculate();
         }
         return EmbyTools.colorByLow(avgFPS);

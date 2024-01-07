@@ -82,7 +82,7 @@ public class EmbPlusOptions {
         builder.add(OptionImpl.createBuilder(Integer.TYPE, sodiumOpts)
                 .setName(Component.translatable("embeddium.plus.options.displayfps.margin.title"))
                 .setTooltip(Component.translatable("embeddium.plus.options.displayfps.margin.desc"))
-                .setControl((option) -> new SliderControl(option, 4, 64, 1, (v) -> Component.literal(v + "px")))
+                .setControl((option) -> new SliderControl(option, 4, 64, 1, (v) -> Component.literal(v + "px").getString()))
                 .setImpact(OptionImpact.LOW)
                 .setBinding(
                         (opts, value) -> {

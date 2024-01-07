@@ -267,7 +267,7 @@ public class EmbyConfig {
 
         tileEntityWhitelist = BUILDER
                 .comment("List of all Block Entities to be ignored by distance culling", "Uses ResourceLocation to identify it", "Example 1: \"minecraft:chest\" - Ignores chests only", "Example 2: \"ae2:*\" - ignores all Block entities from Applied Energetics 2")
-                .defineListAllowEmpty(Collections.singletonList("whitelist"), Arrays.asList(DEFAULT_TILE_ENTITIES_WHITELIST), s -> s.toString().contains(":"));
+                .defineListAllowEmpty(Collections.singletonList("whitelist"), () -> Arrays.asList(DEFAULT_TILE_ENTITIES_WHITELIST), s -> s.toString().contains(":"));
 
         // embeddiumplus -> performance -> distanceCulling ->
         BUILDER.pop();
@@ -287,7 +287,7 @@ public class EmbyConfig {
 
         entityWhitelist = BUILDER
                 .comment("List of all Entities to be ignored by distance culling", "Uses ResourceLocation to identify it", "Example 1: \"minecraft:bat\" - Ignores bats only", "Example 2: \"alexsmobs:*\" - ignores all entities for alexmobs mod")
-                .defineListAllowEmpty(Collections.singletonList("whitelist"), Arrays.asList(DEFAULT_ENTITIES_WHITELIST), (s) -> s.toString().contains(":"));
+                .defineListAllowEmpty(Collections.singletonList("whitelist"), () -> Arrays.asList(DEFAULT_ENTITIES_WHITELIST), (s) -> s.toString().contains(":"));
 
         // embeddiumplus ->
         BUILDER.pop(3);
