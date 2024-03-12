@@ -30,14 +30,14 @@ displayTest="IGNORE_SERVER_VERSION"
     side="CLIENT"
 
 [[dependencies.${modid}]]
-    modId="embeddium"
+    modId="rubidium"
     mandatory=true
     versionRange="${embeddiumrange}"
     ordering="AFTER"
     side="CLIENT"
 
 [[dependencies.${modid}]]
-    modId="textrues_embeddium_options"
+    modId="reeses_sodium_options"
     mandatory=true
     versionRange="*"
     ordering="AFTER"

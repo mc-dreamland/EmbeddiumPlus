@@ -15,7 +15,7 @@ base {
 }
 
 minecraft {
-    mappings channel: "${mappingsch}", version: "${mappings_version}-${mcversion}"
+    mappings channel: "${mappingsch}", version: "${mcversion}"
     accessTransformer = file('src/main/resources/META-INF/accesstransformer.cfg')
     copyIdeResources = true
     runs {
@@ -68,14 +68,14 @@ dependencies {
     }
 
     // DEPENDENCIES
-    implementation fg.deobf("org.embeddedt:embeddium-${mcversion}:${embeddiumversion}")
+    implementation fg.deobf("org.embeddedt:embeddium-1.18.2:${embeddiumversion}")
     implementation fg.deobf("curse.maven:jei-238222:${jeiversion}")
     runtimeOnly fg.deobf("curse.maven:textrues-embeddium-options-910506:${embeddiumoptionsversion}")
     runtimeOnly fg.deobf("curse.maven:oculus-581495:${oculusversion}")
 
     // MOD SUPPORT
-    implementation fg.deobf("com.simibubi.create:create-${mcversion}:${createversion}:slim") { transitive = false }
-    implementation fg.deobf("com.jozufozu.flywheel:flywheel-forge-${mcversion}:${flywheelversion}")
+    implementation fg.deobf("com.simibubi.create:create-1.18.2:${createversion}:slim") { transitive = false }
+    implementation fg.deobf("com.jozufozu.flywheel:flywheel-forge-1.18.2:${flywheelversion}")
     implementation fg.deobf("com.tterrag.registrate:Registrate:${registrateversion}")
 
     // UTILITY
@@ -98,7 +98,10 @@ jar {
                 "Implementation-Version": modversion,
                 "Implementation-Vendor" : modauthor,
                 "Implementation-Timestamp": new Date().format("yyyy-MM-dd'T'HH:mm:ssZ"),
-                "MixinConfigs": "${modid}.${mixin_file_suffix}"
+                "MixinConfigs": [
+                        "${modid}.${mixin_file_suffix}",
+                        "com.llamalad7.mixinextras.init.mixins"
+                ]
         ])
     }
 }

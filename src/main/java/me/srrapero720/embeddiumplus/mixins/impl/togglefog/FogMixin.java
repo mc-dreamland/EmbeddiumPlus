@@ -1,6 +1,5 @@
 package me.srrapero720.embeddiumplus.mixins.impl.togglefog;
 
-import com.mojang.blaze3d.shaders.FogShape;
 import com.mojang.blaze3d.systems.RenderSystem;
 import me.srrapero720.embeddiumplus.EmbyConfig;
 import net.minecraft.client.Camera;
@@ -22,6 +21,5 @@ public abstract class FogMixin {
 
         RenderSystem.setShaderFogStart(FOG_START);
         RenderSystem.setShaderFogEnd(FOG_END);
-        RenderSystem.setShaderFogShape(FogShape.CYLINDER);
     }
 }
