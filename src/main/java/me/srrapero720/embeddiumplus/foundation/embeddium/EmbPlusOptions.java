@@ -22,20 +22,21 @@ import me.srrapero720.embeddiumplus.EmbyConfig.*;
 import java.util.List;
 
 public class EmbPlusOptions {
-    public static Option<FullScreenMode> getFullscreenOption(MinecraftOptionsStorage options) {
-        return OptionImpl.createBuilder(FullScreenMode.class, options)
-                .setName(new TranslatableComponent("embeddium.plus.options.screen.title"))
-                .setTooltip(new TranslatableComponent("embeddium.plus.options.screen.desc"))
-                .setControl((opt) -> new CyclingControl<>(opt, FullScreenMode.class, new Component[] {
-                        new TranslatableComponent("embeddium.plus.options.screen.windowed"),
-                        new TranslatableComponent("embeddium.plus.options.screen.borderless"),
-                        new TranslatableComponent("options.fullscreen")
-                }))
-                .setBinding(EmbyConfig::setFullScreenMode, (opts) -> EmbyConfig.fullScreen.get()).build();
-    }
+//    public static Option<FullScreenMode> getFullscreenOption(MinecraftOptionsStorage options) {
+//        return OptionImpl.createBuilder(FullScreenMode.class, options)
+//                .setName(new TranslatableComponent("embeddium.plus.options.screen.title"))
+//                .setTooltip(new TranslatableComponent("embeddium.plus.options.screen.desc"))
+//                .setControl((opt) -> new CyclingControl<>(opt, FullScreenMode.class, new Component[] {
+//                        new TranslatableComponent("embeddium.plus.options.screen.windowed"),
+//                        new TranslatableComponent("embeddium.plus.options.screen.borderless"),
+//                        new TranslatableComponent("options.fullscreen")
+//                }))
+//                .setBinding(EmbyConfig::setFullScreenMode, (opts) -> EmbyConfig.fullScreen.get()).build();
+//    }
 
 
     public static void setFPSOptions(List<OptionGroup> groups, SodiumOptionsStorage sodiumOpts) {
+        if (!EmbyConfig.isLoaded()) EmbyConfig.load();
         var builder = OptionGroup.createBuilder();
 
         builder.add(OptionImpl.createBuilder(FPSDisplayMode.class, sodiumOpts)

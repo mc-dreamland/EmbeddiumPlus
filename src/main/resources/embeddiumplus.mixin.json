@@ -5,8 +5,8 @@
   "compatibilityLevel": "JAVA_17",
   "refmap": "embeddiumplus.mixin-refmap.json",
   "client": [
-    "borderless.BorderlessWindowMixin",
-    "borderless.KeyboardF11Mixin",
+//    "borderless.BorderlessWindowMixin",
+//    "borderless.KeyboardF11Mixin",
     "borderless.accessors.MainWindowAccessor",
     "cloudheight.CloudHeightMixin",
     "darkness.DimensionEffectsMixin",

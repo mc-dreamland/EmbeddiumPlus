@@ -29,7 +29,7 @@ public class EmbyConfig {
     public static final ForgeConfigSpec SPECS;
 
     // GENERAL
-    public static final EnumValue<FullScreenMode> fullScreen;
+//    public static final EnumValue<FullScreenMode> fullScreen;
     public static final EnumValue<FPSDisplayMode> fpsDisplayMode;
     public static final EnumValue<FPSDisplayGravity> fpsDisplayGravity;
     public static final EnumValue<FPSDisplaySystemMode> fpsDisplaySystemMode;
@@ -97,7 +97,7 @@ public class EmbyConfig {
     public static volatile int entityCullingDistanceYCache;
 
     // OTHERS
-    public static final EnumValue<AttachMode> borderlessAttachModeF11;
+//    public static final EnumValue<AttachMode> borderlessAttachModeF11;
     public static final BooleanValue fastLanguageReload;
     public static boolean fastLanguageReloadCache; // this theoretically wasn't needed,
     // but I am seeing people complaining why fast language reload wasn't cached
@@ -131,13 +131,13 @@ public class EmbyConfig {
 
         // embeddiumplus -> general ->
         BUILDER.push("general");
-        fullScreen = BUILDER
-                .comment("Set Fullscreen mode", "Borderless let you change between screens more faster and move your mouse across monitors")
-                .defineEnum("fullscreen", FullScreenMode.WINDOWED);
+//        fullScreen = BUILDER
+//                .comment("Set Fullscreen mode", "Borderless let you change between screens more faster and move your mouse across monitors")
+//                .defineEnum("fullscreen", FullScreenMode.WINDOWED);
 
         fpsDisplayMode = BUILDER
                 .comment("Configure FPS Display mode", "Complete mode gives you min FPS count and average count")
-                .defineEnum("fpsDisplay", FPSDisplayMode.ADVANCED);
+                .defineEnum("fpsDisplay", FPSDisplayMode.OFF);
 
         fpsDisplayGravity = BUILDER
                 .comment("Configure FPS Display gravity", "Places counter on specified corner of your screen")
@@ -294,9 +294,9 @@ public class EmbyConfig {
 
         // embeddiumplus -> others
         BUILDER.push("others");
-        borderlessAttachModeF11 = BUILDER
-                .comment("Configure if borderless fullscreen option should be attached to F11 or replace vanilla fullscreen")
-                .defineEnum("borderlessAttachModeOnF11", AttachMode.ATTACH);
+//        borderlessAttachModeF11 = BUILDER
+//                .comment("Configure if borderless fullscreen option should be attached to F11 or replace vanilla fullscreen")
+//                .defineEnum("borderlessAttachModeOnF11", AttachMode.ATTACH);
         fastLanguageReload = BUILDER
                 .comment("Toggles fast language reload", "Embeddedt points it maybe cause troubles to JEI, so ¿why not add it as a toggleable option?")
                 .define("fastLanguageReload", true);
@@ -393,23 +393,23 @@ public class EmbyConfig {
         LOGGER.info(IT,"Cache updated successfully");
     }
 
-    public static void setFullScreenMode(Options opts, FullScreenMode value) {
-        fullScreen.set(value);
-        opts.fullscreen = (value != FullScreenMode.WINDOWED);
-
-        Minecraft client = Minecraft.getInstance();
-        Window window = client.getWindow();
-
-        if (window.isFullscreen() != opts.fullscreen) {
-            window.toggleFullScreen();
-            opts.fullscreen = (window.isFullscreen());
-        }
-
-        if (opts.fullscreen) {
-            ((MainWindowAccessor) (Object) window).setDirty(true);
-            window.changeFullscreenVideoMode();
-        }
-    }
+//    public static void setFullScreenMode(Options opts, FullScreenMode value) {
+//        fullScreen.set(value);
+//        opts.fullscreen = (value != FullScreenMode.WINDOWED);
+//
+//        Minecraft client = Minecraft.getInstance();
+//        Window window = client.getWindow();
+//
+//        if (window.isFullscreen() != opts.fullscreen) {
+//            window.toggleFullScreen();
+//            opts.fullscreen = (window.isFullscreen());
+//        }
+//
+//        if (opts.fullscreen) {
+//            ((MainWindowAccessor) (Object) window).setDirty(true);
+//            window.changeFullscreenVideoMode();
+//        }
+//    }
 
     public enum AttachMode {
         ATTACH, REPLACE, OFF;

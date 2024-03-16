@@ -25,17 +25,17 @@ public class OthersPage extends OptionPage {
         final List<OptionGroup> groups = new ArrayList<>();
 
         groups.add(OptionGroup.createBuilder()
-                .add(OptionImpl.createBuilder(EmbyConfig.AttachMode.class, mixinsOptionsStorage)
-                        .setName(new TranslatableComponent("embeddium.plus.options.others.borderless.attachmode.title"))
-                        .setTooltip(new TranslatableComponent("embeddium.plus.options.others.borderless.attachmode.desc"))
-                        .setControl(option -> new CyclingControl<>(option, EmbyConfig.AttachMode.class, new Component[] {
-                                new TranslatableComponent("embeddium.plus.options.common.attach"),
-                                new TranslatableComponent("embeddium.plus.options.common.replace"),
-                                new TranslatableComponent("embeddium.plus.options.common.off")
-                        }))
-                        .setBinding((options, value) -> EmbyConfig.borderlessAttachModeF11.set(value),
-                                (options) -> EmbyConfig.borderlessAttachModeF11.get())
-                        .build())
+//                .add(OptionImpl.createBuilder(EmbyConfig.AttachMode.class, mixinsOptionsStorage)
+//                        .setName(new TranslatableComponent("embeddium.plus.options.others.borderless.attachmode.title"))
+//                        .setTooltip(new TranslatableComponent("embeddium.plus.options.others.borderless.attachmode.desc"))
+//                        .setControl(option -> new CyclingControl<>(option, EmbyConfig.AttachMode.class, new Component[] {
+//                                new TranslatableComponent("embeddium.plus.options.common.attach"),
+//                                new TranslatableComponent("embeddium.plus.options.common.replace"),
+//                                new TranslatableComponent("embeddium.plus.options.common.off")
+//                        }))
+//                        .setBinding((options, value) -> EmbyConfig.borderlessAttachModeF11.set(value),
+//                                (options) -> EmbyConfig.borderlessAttachModeF11.get())
+//                        .build())
                 .add(OptionImpl.createBuilder(boolean.class, mixinsOptionsStorage)
                         .setName(new TranslatableComponent("embeddium.plus.options.others.languagescreen.fastreload.title"))
                         .setTooltip(new TranslatableComponent("embeddium.plus.options.others.languagescreen.fastreload.desc"))
