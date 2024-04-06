@@ -14,6 +14,7 @@ import org.slf4j.LoggerFactory;
 public class EmbeddiumPlus {
     public static final String ID = "embeddiumplus";
     public static final Logger LOGGER = LogManager.getLogger("Embeddium++");
+    public static boolean hasEbe = false;
 
     public EmbeddiumPlus() {
         ArtifactVersion version = getForgeVersion();
@@ -23,7 +24,9 @@ public class EmbeddiumPlus {
         if (version.compareTo(new DefaultArtifactVersion("41.1.0")) < 0) {
             // On later versions this is done via the mods.toml entry
             markAsOneSided();
-        }}
+        }
+        hasEbe = EmbyTools.isModInstalled("enhancedblockentities");
+    }
 
 
     private static final org.slf4j.Logger LOGGER2 = LoggerFactory.getLogger("MixinExtras|Forge");

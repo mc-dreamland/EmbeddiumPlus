@@ -11,11 +11,6 @@ import net.minecraftforge.fml.common.Mod;
 public class FastModels {
 
     public static boolean canUseOnChests() {
-        try {
-            return FlwConfig.get().getBackendType() == BackendType.OFF;
-        } catch (Error e) { // NO FLYWHEEL
-            // EBE conflicts with this.
-            return !EmbyTools.isModInstalled("enhancedblockentities");
-        }
+        return !EmbeddiumPlus.hasEbe;
     }
 }
